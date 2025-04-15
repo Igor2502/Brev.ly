@@ -1,3 +1,4 @@
+import { saveUrl } from "@/app/services/save-url";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
@@ -18,7 +19,10 @@ export const saveUrlRoute: FastifyPluginAsyncZod = async (server) => {
 			},
 		},
 		async (request, reply) => {
-			return reply.status(201).send({ urlId: "123456789" });
+			const url = request.body;
+			const { urlId } = await saveUrl(url);
+
+			return reply.status(201).send({ urlId });
 		},
 	);
 };
