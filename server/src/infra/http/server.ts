@@ -33,8 +33,6 @@ server.register(fastifyCors, {
 	origin: "*",
 });
 
-server.register(fastifyCors, { origin: "*" });
-
 server.register(fastifyMultipart);
 server.register(fastifySwagger, {
 	openapi: {
