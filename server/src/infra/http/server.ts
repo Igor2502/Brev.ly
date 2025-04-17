@@ -12,6 +12,7 @@ import {
 } from "fastify-type-provider-zod";
 import { deleteUrlRoute } from "./routes/delete-url";
 import { findUrlRoute } from "./routes/find-url";
+import { listUrlsRoute } from "./routes/list-urls";
 import { saveUrlRoute } from "./routes/save-url";
 
 const server = fastify();
@@ -52,6 +53,7 @@ server.register(fastifySwaggerUi, {
 server.register(saveUrlRoute);
 server.register(deleteUrlRoute);
 server.register(findUrlRoute);
+server.register(listUrlsRoute);
 
 const port = +(env.PORT || 3000);
 server.listen({ port, host: "0.0.0.0" }).then(() => {
