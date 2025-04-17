@@ -8,6 +8,13 @@
       "when": 1744752933355,
       "tag": "0000_daffy_smiling_tiger",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1744923907483,
+      "tag": "0001_fast_alice",
+      "breakpoints": true
     }
   ]
 }
