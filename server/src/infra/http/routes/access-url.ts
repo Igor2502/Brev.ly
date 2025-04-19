@@ -1,27 +1,22 @@
 import { findUrlById } from "@/app/services/find-url";
+import { incrementUrlAccessCount } from "@/app/services/increment-url-access";
 import { isSuccess, unwrapEither } from "@/shared/either";
-import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
+import type { FastifyPluginAsync } from "fastify";
 import { z } from "zod";
 
-export const findUrlRoute: FastifyPluginAsyncZod = async (server) => {
+export const accessUrlRoute: FastifyPluginAsync = async (server) => {
 	server.get(
-		"/find-url/:urlId",
+		"/:urlId",
 		{
 			schema: {
-				summary: "Find a URL by ID",
-				description: "Find a URL by its unique ID",
+				summary: "Access a URL",
+				description:
+					"Redirect to the original URL using the compact URL ⚠️ This route redirects to an external domain and cannot be tested via Swagger UI.",
 				params: z.object({
 					urlId: z.string().uuid(),
 				}),
 				response: {
-					200: z
-						.object({
-							originalUrl: z.string().url(),
-							compactUrl: z.string(),
-							createdAt: z.date(),
-							accessCount: z.number(),
-						})
-						.describe("URL found successfully"),
+					302: z.object({}).describe("Redirect to the original URL"),
 					404: z.object({ message: z.string() }).describe("URL not found"),
 					500: z
 						.object({ message: z.string() })
@@ -36,13 +31,9 @@ export const findUrlRoute: FastifyPluginAsyncZod = async (server) => {
 
 			if (isSuccess(result)) {
 				const url = unwrapEither(result);
+				await incrementUrlAccessCount({ urlId, accessCount: url.accessCount });
 
-				return reply.status(200).send({
-					originalUrl: url.originalUrl,
-					compactUrl: url.compactUrl,
-					createdAt: url.createdAt,
-					accessCount: url.accessCount,
-				});
+				return reply.status(302).redirect(url.originalUrl);
 			}
 
 			const error = unwrapEither(result);

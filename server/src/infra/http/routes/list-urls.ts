@@ -19,6 +19,7 @@ export const listUrlsRoute: FastifyPluginAsyncZod = async (server) => {
 								originalUrl: z.string().url(),
 								compactUrl: z.string(),
 								createdAt: z.date(),
+								accessCount: z.number(),
 							}),
 						)
 						.describe("List of URLs retrieved successfully"),

@@ -10,6 +10,7 @@ import {
 	serializerCompiler,
 	validatorCompiler,
 } from "fastify-type-provider-zod";
+import { accessUrlRoute } from "./routes/access-url";
 import { deleteUrlRoute } from "./routes/delete-url";
 import { findUrlRoute } from "./routes/find-url";
 import { listUrlsRoute } from "./routes/list-urls";
@@ -54,6 +55,7 @@ server.register(saveUrlRoute);
 server.register(deleteUrlRoute);
 server.register(findUrlRoute);
 server.register(listUrlsRoute);
+server.register(accessUrlRoute);
 
 const port = +(env.PORT || 3000);
 server.listen({ port, host: "0.0.0.0" }).then(() => {

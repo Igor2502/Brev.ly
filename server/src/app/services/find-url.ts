@@ -30,6 +30,7 @@ export async function findUrlById(
 		originalUrl: urlData.originalUrl,
 		compactUrl: urlData.compactUrl,
 		createdAt: urlData.createdAt,
+		accessCount: urlData.accessCount,
 	});
 
 	return makeSuccess(urlDTO);
