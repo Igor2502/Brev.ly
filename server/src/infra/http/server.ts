@@ -12,6 +12,7 @@ import {
 } from "fastify-type-provider-zod";
 import { accessUrlRoute } from "./routes/access-url";
 import { deleteUrlRoute } from "./routes/delete-url";
+import { exportUrlsToCsvRoute } from "./routes/export-urls-to-csv";
 import { findUrlRoute } from "./routes/find-url";
 import { listUrlsRoute } from "./routes/list-urls";
 import { saveUrlRoute } from "./routes/save-url";
@@ -56,6 +57,7 @@ server.register(deleteUrlRoute);
 server.register(findUrlRoute);
 server.register(listUrlsRoute);
 server.register(accessUrlRoute);
+server.register(exportUrlsToCsvRoute);
 
 const port = +(env.PORT || 3000);
 server.listen({ port, host: "0.0.0.0" }).then(() => {
