@@ -75,7 +75,6 @@ jobs:
           image-ref: ${{ steps.ecr-login.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:scan
           format: table
           ignore-unfixed: true
-          ignore-policy: true
           vuln-type: os,library
           severity: CRITICAL,HIGH
 
