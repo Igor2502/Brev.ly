@@ -7,7 +7,7 @@ export function App() {
     <main className="h-dvh flex items-center justify-center">
       <div className="w-full max-w-[956px] flex flex-col items-center sm:items-start">
         <img src={logoBrevly} alt="Brevly Logo" className="w-24 h-24 sm:self-center md:self-start" />
-        <div className="flex flex-row items-start justify-center gap-4 w-full">
+        <div className="flex flex-col md:flex-row items-center md:items-start justify-center gap-4 w-full">
           <NewUrl />
           <MyUrls />
         </div>
