@@ -7,8 +7,8 @@ export function NewUrl() {
 		<div className="flex flex-col gap-2 max-w-[360px] w-full">
 			<div className="flex flex-col bg-gray-100 h-[340px] rounded-2xl p-8 justify-between">
 				<Header title="Novo link" />
-				<Input />
-				<Input />
+				<Input label="link original" type="text" placeholder="www.exemplo.com.br" />
+				<Input label="linkk encurtado" type="text" placeholder="brev.ly/" />
 				<Button />
 			</div>
 		</div>
