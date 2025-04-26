@@ -9,7 +9,11 @@ export function NewUrl() {
 				<Header title="Novo link" />
 				<Input label="link original" type="text" placeholder="www.exemplo.com.br" />
 				<Input label="linkk encurtado" type="text" placeholder="brev.ly/" />
-				<Button />
+				<Button
+					variant="primary"
+					size="large"
+					label="Salvar link"
+				/>
 			</div>
 		</div>
 	);
