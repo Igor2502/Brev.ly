@@ -27,8 +27,10 @@ export function Button({ variant = 'primary', size = 'medium', label, icon, ...r
       {...rest}
       className={classes}
     >
-      {icon && <span className="mr-1.5">{icon}</span>}
-      {label}
+      <div className="flex items-center justify-center gap-2">
+        {icon}
+        {label}
+      </div>
     </button>
   );
 }
