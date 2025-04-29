@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import logoIcon from '../assets/Logo_Icon.svg';
 
 export function Redirect() {
 
@@ -23,8 +24,8 @@ export function Redirect() {
 
     if (foundUrl) {
       const timer = setTimeout(() => {
-        window.open(foundUrl.originalUrl, '_blank');
-        navigate('/', { replace: true }); // Volta para Home depois de abrir nova aba
+        // window.open(foundUrl.originalUrl, '_blank');
+        // navigate('/', { replace: true }); // Volta para Home depois de abrir nova aba
       }, 2000);
 
       return () => clearTimeout(timer); // limpar timeout se o componente desmontar
@@ -34,9 +35,20 @@ export function Redirect() {
   }, [slug, navigate]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-dvh">
-      <div className="animate-pulse text-blue-500 text-lg font-semibold">
-        Redirecionando...
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className='flex flex-col items-center justify-center max-h-[296px] max-w-[580px] bg-gray-100 px-12 py-16 gap-6'>
+        <img src={logoIcon} alt="Logo Brev.lyv" className="w-12 h-12" />
+        <h1 className="text-xl text-gray-600">
+          Redirecionando...
+        </h1>
+        <p className="text-md text-gray-500 text-center">
+          O link será aberto automaticamente em alguns instantes.
+          <br />
+          Não foi redirecionado?&nbsp;
+          <Link to={`/${slug}`} className="text-blue-500 hover:underline">
+            Acesse aqui
+          </Link>
+        </p>
       </div>
     </div>
   );
