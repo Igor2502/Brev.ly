@@ -24,8 +24,8 @@ export function Redirect() {
 
     if (foundUrl) {
       const timer = setTimeout(() => {
-        // window.open(foundUrl.originalUrl, '_blank');
-        // navigate('/', { replace: true }); // Volta para Home depois de abrir nova aba
+        window.open(foundUrl.originalUrl, '_blank');
+        navigate('/', { replace: true }); // Volta para Home depois de abrir nova aba
       }, 2000);
 
       return () => clearTimeout(timer); // limpar timeout se o componente desmontar
