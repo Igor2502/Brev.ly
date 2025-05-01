@@ -3,9 +3,10 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'small' | 'medium' | 'large';
   label?: string;
   icon?: React.ReactNode;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export function Button({ variant = 'primary', size = 'medium', label, icon, ...rest }: ButtonProps) {
+export function Button({ variant = 'primary', size = 'medium', label, icon, onClick, ...rest }: ButtonProps) {
   const variantClasses = {
     primary: 'bg-blue-base hover:bg-blue-dark text-white',
     secondary: 'bg-gray-200 hover:border hover:border-blue-base text-gray-500',
@@ -25,6 +26,7 @@ export function Button({ variant = 'primary', size = 'medium', label, icon, ...r
     <button
       type="button"
       {...rest}
+      onClick={onClick}
       className={classes}
     >
       <div className="flex items-center justify-center gap-2">

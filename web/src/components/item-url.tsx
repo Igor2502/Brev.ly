@@ -1,5 +1,7 @@
 import { Copy, Trash } from '@phosphor-icons/react'
 import { Button } from "./ui/button"
+import { api } from '../shared/api-fetch'
+import { toast } from 'react-toastify'
 
 interface ItemUrlProps {
   item: {
@@ -10,8 +12,23 @@ interface ItemUrlProps {
   }
 }
 
-export function ItemUrl({ item: { compactUrl, originalUrl, accessCount } }: ItemUrlProps) {
+export function ItemUrl({ item: { id, compactUrl, originalUrl, accessCount } }: ItemUrlProps) {
   const accessText = `${accessCount} ${accessCount === 1 ? 'acesso' : 'acessos'}`;
+
+  const removeUrl = async () => {
+    try {
+      const response = await api.delete(`/delete-url/${id}`);
+      if (response.status === 200) {
+        toast('URL removida com sucesso', { type: 'success' });
+      }
+    } catch (error) {
+      if ((error as { status: number }).status === 404) {
+        toast('URL não encontrada', { type: 'warning' });
+      } else if ((error as { status: number }).status === 500) {
+        toast('Erro ao remover URL', { type: 'error' });
+      }
+    }
+  }
 
   return (
     <div className="flex flex-row justify-between items-center gap-4 py-3 w-full border-t border-gray-200">
@@ -33,6 +50,7 @@ export function ItemUrl({ item: { compactUrl, originalUrl, accessCount } }: Item
             variant="secondary"
             size="small"
             icon={<Trash size={16} className="text-gray-600" />}
+            onClick={removeUrl}
           />
         </div>
       </div>
