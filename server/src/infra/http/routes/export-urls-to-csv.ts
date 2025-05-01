@@ -42,10 +42,10 @@ export const exportUrlsToCsvRoute: FastifyPluginAsyncZod = async (server) => {
 				header: true,
 				columns: [
 					{ key: "id", header: "ID" },
-					{ key: "originalUrl", header: "Original URL" },
-					{ key: "compactUrl", header: "Short URL" },
-					{ key: "accessCount", header: "Access Count" },
-					{ key: "createdAt", header: "Created At" },
+					{ key: "original_url", header: "Original URL" },
+					{ key: "compact_url", header: "Short URL" },
+					{ key: "access_count", header: "Access Count" },
+					{ key: "created_at", header: "Created At" },
 				],
 			});
 
