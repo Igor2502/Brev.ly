@@ -6,6 +6,7 @@ interface InputProps {
   placeholder?: string;
   value?: string;
   fixedPrefix?: string;
+  onChange?: (value: string) => void;
 }
 
 export function Input({
@@ -13,7 +14,8 @@ export function Input({
   type = "text",
   placeholder = "",
   value = "",
-  fixedPrefix
+  fixedPrefix,
+  onChange
 }: InputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
@@ -30,7 +32,9 @@ export function Input({
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setInputValue(event.target.value);
+    const newValue = event.target.value;
+    setInputValue(newValue);
+    onChange?.(newValue);
   }
 
   return (
