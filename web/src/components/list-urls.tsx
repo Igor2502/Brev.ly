@@ -1,23 +1,24 @@
 import { Link } from '@phosphor-icons/react'
-import { ItemUrl } from './item-url'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { api } from '../shared/api-fetch'
+import { type Url, useUrls } from '../store/urls'
+import { ItemUrl } from './item-url'
 
-type Url = {
-  id: number
-  originalUrl: string
-  compactUrl: string
-  accessCount: number
-}
 
 export function ListUrls() {
-  const [urls, setUrls] = useState<Array<Url>>([]);
+  const { urls, addUrl } = useUrls();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     async function fetchUrls() {
       try {
         const response = await api.get<Array<Url>>('/list-urls');
-        setUrls(response.data);
+        for (const data of response.data) {
+          addUrl({
+            ...data,
+          });
+
+        }
       } catch (error) {
         console.error('Error fetching URLs:', error);
       }
@@ -25,14 +26,17 @@ export function ListUrls() {
     fetchUrls();
   }, []);
 
-  const hasData = urls.length > 0
+  const hasData = urls.size > 0;
 
   return (
     <div className="flex flex-col w-full max-w-full gap-2 items-center md:max-h-[300px] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-blue-base scrollbar-hover:scrollbar-thumb-blue-dark">
       {hasData ? (
-        urls.map(item => (
-          <ItemUrl key={item.id} item={item} />
-        ))
+        Array
+          .from(urls.entries())
+          .sort((a: [string, Url], b: [string, Url]) => b[1].createdAt.localeCompare(a[1].createdAt))
+          .map(([urlId, url]) => (
+            <ItemUrl key={urlId} item={url} />
+          ))
       ) : (
         <>
           <div className="w-full border-t border-gray-200" />

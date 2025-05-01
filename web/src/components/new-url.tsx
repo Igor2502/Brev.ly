@@ -1,13 +1,16 @@
 import { useState } from "react";
+import { toast } from 'react-toastify';
 import { api } from "../shared/api-fetch";
+import { useUrls } from "../store/urls";
 import { Button } from "./ui/button";
 import { Header } from "./ui/header";
 import { Input } from "./ui/input";
-import { toast } from 'react-toastify';
 
 export function NewUrl() {
 	const [originalUrl, setOriginalUrl] = useState("");
 	const [compactUrl, setCompactUrl] = useState("");
+
+	const { addUrl } = useUrls();
 
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -26,7 +29,16 @@ export function NewUrl() {
 				compactUrl,
 			});
 			if (response.status === 201) {
+				const savedUrl = await api.get(`/find-url/${response.data.urlId}`);
+
+				if (savedUrl.data) {
+					addUrl({
+						id: response.data.urlId,
+						...savedUrl.data,
+					});
+				}
 				toast("URL salva com sucesso", { type: "success", });
+
 			}
 		} catch (error) {
 			if ((error as { status: number }).status === 400) {

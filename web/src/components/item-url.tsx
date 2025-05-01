@@ -1,25 +1,23 @@
 import { Copy, Trash } from '@phosphor-icons/react'
-import { Button } from "./ui/button"
-import { api } from '../shared/api-fetch'
 import { toast } from 'react-toastify'
+import { api } from '../shared/api-fetch'
+import { type Url, useUrls } from '../store/urls'
+import { Button } from "./ui/button"
 
 interface ItemUrlProps {
-  item: {
-    id: number
-    originalUrl: string
-    compactUrl: string
-    accessCount: number
-  }
+  item: Url
 }
 
 export function ItemUrl({ item: { id, compactUrl, originalUrl, accessCount } }: ItemUrlProps) {
   const accessText = `${accessCount} ${accessCount === 1 ? 'acesso' : 'acessos'}`;
+  const { deleteUrl } = useUrls();
 
   const removeUrl = async () => {
     try {
       const response = await api.delete(`/delete-url/${id}`);
       if (response.status === 200) {
         toast('URL removida com sucesso', { type: 'success' });
+        deleteUrl(id);
       }
     } catch (error) {
       if ((error as { status: number }).status === 404) {

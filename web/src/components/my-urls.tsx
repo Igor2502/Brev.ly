@@ -1,9 +1,13 @@
 import { DownloadSimple } from '@phosphor-icons/react';
+import { useUrls } from '../store/urls';
 import { ListUrls } from "./list-urls";
 import { Button } from "./ui/button";
 import { Header } from "./ui/header";
 
 export function MyUrls() {
+  const { urls } = useUrls();
+  const hasData = urls.size > 0;
+
   return (
     <div className="flex flex-col gap-2 max-w-[366px] md:max-w-[580px] w-full bg-gray-100 rounded-2xl p-6 md:p-8">
       <div className="flex flex-row mb-4">
@@ -13,6 +17,7 @@ export function MyUrls() {
           size="medium"
           label="Baixar CSV"
           icon={<DownloadSimple size={16} className="text-gray-600" />}
+          disabled={!hasData}
         />
       </div>
 
