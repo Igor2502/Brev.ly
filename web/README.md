@@ -6,7 +6,7 @@
 - ❌ Deve ser possível obter a URL original por meio do encurtamento
 - ✔️ Deve ser possível listar todas as URL’s cadastradas
 - ❌ Deve ser possível incrementar a quantidade de acessos de um link
-- ❌ Deve ser possível baixar um CSV com o relatório dos links criados
+- ✔️ Deve ser possível baixar um CSV com o relatório dos links criados
 - ✔️ É obrigatória a criação de uma aplicação React no formato SPA utilizando o Vite como `bundler`;
 - ✔️ Siga o mais fielmente possível o layout do Figma;
 - ❌ Trabalhe com elementos que tragam uma boa experiência ao usuário (`empty state`, ícones de carregamento, bloqueio de ações a depender do estado da aplicação);
