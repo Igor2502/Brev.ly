@@ -30,6 +30,11 @@ export function ItemUrl({ item: { id, compactUrl, originalUrl, accessCount } }: 
     }
   }
 
+  const copyUrlToClipboard = async () => {
+    await navigator.clipboard.writeText(originalUrl)
+    toast('URL copiada para a área de transferência', { type: 'info' });
+  }
+
   return (
     <div className="flex flex-row justify-between items-center gap-4 py-3 w-full border-t border-gray-200">
       <div className="flex flex-col w-[147px] md:w-[320px]">
@@ -45,6 +50,7 @@ export function ItemUrl({ item: { id, compactUrl, originalUrl, accessCount } }: 
             variant="secondary"
             size="small"
             icon={<Copy size={16} className="text-gray-600" />}
+            onClick={copyUrlToClipboard}
           />
           <Button
             variant="secondary"
