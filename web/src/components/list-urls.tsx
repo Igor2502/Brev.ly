@@ -1,22 +1,36 @@
 import { Link } from '@phosphor-icons/react'
 import { ItemUrl } from './item-url'
+import { useEffect, useState } from 'react'
+import { api } from '../shared/api-fetch'
+
+type Url = {
+  id: number
+  originalUrl: string
+  compactUrl: string
+  accessCount: number
+}
 
 export function ListUrls() {
-  const fakeData = [
-    { id: 1, originalUrl: 'https://example.com', compactUrl: 'https://brev.ly/abc123456', accessCount: 30 },
-    { id: 2, originalUrl: 'https://example.org', compactUrl: 'https://brev.ly/xyz789', accessCount: 15 },
-    { id: 3, originalUrl: 'https://example.com', compactUrl: 'https://brev.ly/abc123', accessCount: 1 },
-    { id: 4, originalUrl: 'https://example.org', compactUrl: 'https://brev.ly/xyz789', accessCount: 0 },
-    { id: 5, originalUrl: 'https://example.com', compactUrl: 'https://brev.ly/abc123', accessCount: 18 },
-    { id: 6, originalUrl: 'https://example.org', compactUrl: 'https://brev.ly/xyz789', accessCount: 6 },
-  ]
+  const [urls, setUrls] = useState<Array<Url>>([]);
 
-  const hasData = fakeData.length > 0
+  useEffect(() => {
+    async function fetchUrls() {
+      try {
+        const response = await api.get<Array<Url>>('/list-urls');
+        setUrls(response.data);
+      } catch (error) {
+        console.error('Error fetching URLs:', error);
+      }
+    }
+    fetchUrls();
+  }, []);
+
+  const hasData = urls.length > 0
 
   return (
     <div className="flex flex-col w-full max-w-full gap-2 items-center md:max-h-[300px] overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-blue-base scrollbar-hover:scrollbar-thumb-blue-dark">
       {hasData ? (
-        fakeData.map(item => (
+        urls.map(item => (
           <ItemUrl key={item.id} item={item} />
         ))
       ) : (
