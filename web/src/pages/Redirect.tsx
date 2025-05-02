@@ -1,38 +1,49 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import logoIcon from '../assets/Logo_Icon.svg';
+import { api } from '../shared/api-fetch';
+import { type Url, useUrls } from '../store/urls';
 
 export function Redirect() {
-
-  const urls = [
-    { id: 1, originalUrl: 'https://example.com', compactUrl: 'https://brev.ly/abc123456', accessCount: 30 },
-    { id: 2, originalUrl: 'https://example.org', compactUrl: 'https://brev.ly/xyz789', accessCount: 15 },
-    { id: 3, originalUrl: 'https://example.com', compactUrl: 'https://brev.ly/abc123', accessCount: 1 },
-    { id: 4, originalUrl: 'https://example.org', compactUrl: 'https://brev.ly/xyz789', accessCount: 0 },
-    { id: 5, originalUrl: 'https://example.com', compactUrl: 'https://brev.ly/abc123', accessCount: 18 },
-    { id: 6, originalUrl: 'https://example.org', compactUrl: 'https://brev.ly/xyz789', accessCount: 6 },
-  ];
-
+  const { urls, loadUrls } = useUrls();
   const { slug } = useParams();
   const navigate = useNavigate();
+  const hasRedirected = useRef(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!slug) return;
+    const handleRedirect = async () => {
+      if (!slug || hasRedirected.current) return;
 
-    const fullUrl = `https://brev.ly/${slug}`;
-    const foundUrl = urls.find(url => url.compactUrl === fullUrl);
+      // Carregar URLs se necessário
+      if (urls.size === 0 && !isLoading) {
+        setIsLoading(true);
+        await loadUrls();
+        setIsLoading(false);
+        return;
+      }
 
-    if (foundUrl) {
-      const timer = setTimeout(() => {
-        window.open(foundUrl.originalUrl, '_blank');
-        navigate('/', { replace: true }); // Volta para Home depois de abrir nova aba
-      }, 2000);
+      const urlList: Array<Url> = Array.from(urls.values());
+      const foundUrl = urlList.find((url) => url.compactUrl === slug);
 
-      return () => clearTimeout(timer); // limpar timeout se o componente desmontar
-    }
+      if (foundUrl) {
+        hasRedirected.current = true;
 
-    navigate('/404', { replace: true });
-  }, [slug, navigate]);
+        setTimeout(async () => {
+          try {
+            await api.get(`/${foundUrl.id}`);
+            window.open(foundUrl.originalUrl, '_blank');
+          } finally {
+            navigate('/', { replace: true });
+          }
+        }, 2000);
+      } else {
+        navigate('/404', { replace: true });
+      }
+    };
+
+    handleRedirect();
+  }, [slug, urls, navigate, loadUrls, isLoading]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">

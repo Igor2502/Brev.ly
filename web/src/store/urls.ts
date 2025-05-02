@@ -1,6 +1,7 @@
 import { enableMapSet } from "immer";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
+import { api } from "../shared/api-fetch";
 
 export type Url = {
 	id: string;
@@ -14,6 +15,7 @@ type UrlState = {
 	urls: Map<string, Url>;
 	addUrl: (url: Url) => void;
 	deleteUrl: (urlId: string) => void;
+	loadUrls: () => Promise<void>;
 };
 
 enableMapSet();
@@ -32,10 +34,20 @@ export const useUrls = create<UrlState, [["zustand/immer", never]]>(
 			});
 		}
 
+		async function loadUrls() {
+			const response = await api.get("/list-urls");
+			set((state) => {
+				for (const url of response.data) {
+					state.urls.set(url.id, url);
+				}
+			});
+		}
+
 		return {
 			urls: new Map<string, Url>(),
 			addUrl,
 			deleteUrl,
+			loadUrls,
 		};
 	}),
 );

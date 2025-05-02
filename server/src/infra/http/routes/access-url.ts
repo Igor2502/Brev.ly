@@ -33,7 +33,9 @@ export const accessUrlRoute: FastifyPluginAsync = async (server) => {
 				const url = unwrapEither(result);
 				await incrementUrlAccessCount({ urlId, accessCount: url.accessCount });
 
-				return reply.status(302).redirect(url.originalUrl);
+				// Comentado pois o redirecionamento via fetch no frontend estava sendo bloqueado pelo CORS no navegador
+				// return reply.status(302).redirect(url.originalUrl);
+				return reply.status(200).send({ message: "Redirecting..." });
 			}
 
 			const error = unwrapEither(result);

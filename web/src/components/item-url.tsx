@@ -1,4 +1,5 @@
 import { Copy, Trash } from '@phosphor-icons/react'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { api } from '../shared/api-fetch'
 import { type Url, useUrls } from '../store/urls'
@@ -11,6 +12,12 @@ interface ItemUrlProps {
 export function ItemUrl({ item: { id, compactUrl, originalUrl, accessCount } }: ItemUrlProps) {
   const accessText = `${accessCount} ${accessCount === 1 ? 'acesso' : 'acessos'}`;
   const { deleteUrl } = useUrls();
+
+  const navigate = useNavigate();
+
+  const handleUrlClick = () => {
+    navigate(`/${compactUrl}`);
+  }
 
   const removeUrl = async () => {
     try {
@@ -35,7 +42,14 @@ export function ItemUrl({ item: { id, compactUrl, originalUrl, accessCount } }: 
 
   return (
     <div className="flex flex-row justify-between items-center gap-4 py-3 w-full border-t border-gray-200">
-      <div className="flex flex-col w-[147px] md:w-[320px]">
+      <div
+        className="cursor-pointer flex flex-col w-[147px] md:w-[320px]"
+        onClick={handleUrlClick}
+        // biome-ignore lint/a11y/useSemanticElements: <explanation>
+        role='button'
+        tabIndex={0}
+        onKeyDown={(e) => e.key === 'Enter' && handleUrlClick()}
+      >
         <span className="text-md text-blue-base truncate">{compactUrl}</span>
         <span className="text-sm text-gray-500 truncate">{originalUrl}</span>
       </div>
