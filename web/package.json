@@ -3,6 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": "Igor Gomes da Silva",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Igor2502/Brev.ly",
+    "directory": "web"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

@@ -18,8 +18,13 @@
     "db:studio": "drizzle-kit studio"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Igor Gomes da Silva",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Igor2502/Brev.ly",
+    "directory": "server"
+  },
   "packageManager": "pnpm@10.8.0",
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
