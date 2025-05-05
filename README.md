@@ -12,6 +12,30 @@ Seja bem-vindo ao **Brev.ly**, um projeto FullStack desenvolvido como parte do d
 
 **Brev.ly** é um encurtador de URLs moderno, desenvolvido com foco em simplicidade, desempenho e experiência do usuário. Permite criar links curtos personalizados, acompanhar estatísticas de acesso e gerenciar URLs de forma eficiente.
 
+## 📸 Preview do Projeto
+Abaixo estão algumas capturas de tela do Brev.ly em funcionamento:
+
+<p align="center">
+  <img src="./.github/images/01.png" alt="Tela inicial do Brev.ly" width="600"/>
+  <br/>
+  <em>Tela inicial com formulário de encurtamento</em>
+</p>
+<p align="center">
+  <img src="./.github/images/02.png" alt="Listagem de URLs cadastradas" width="600"/>
+  <br/>
+  <em>Listagem de URLs cadastradas</em>
+</p>
+<p align="center">
+  <img src="./.github/images/03.png" alt="Tela de redirecionamento" width="600"/>
+  <br/>
+  <em>Redirecionamento para o endereço original</em>
+</p>
+<p align="center">
+  <img src="./.github/images/04.png" alt="Tela de endereço não encontrado" width="600"/>
+  <br/>
+  <em>Página para URL não cadastrada</em>
+</p>
+
 
 ## ✨ Funcionalidades
  - Criação de URLs curtas personalizadas.
